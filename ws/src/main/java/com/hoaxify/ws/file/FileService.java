@@ -1,19 +1,15 @@
 package com.hoaxify.ws.file;
 
 import com.hoaxify.ws.configuration.AppConfiguration;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.tika.Tika;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.UUID;
@@ -60,5 +56,18 @@ public class FileService {
     public String detectType(String value) {
         byte[] base64encoded = Base64.getDecoder().decode(value);
         return tika.detect(base64encoded);
+    }
+
+    public String saveHoaxAttachment(MultipartFile multipartFile) {
+        String fileName = generateRandomName();
+        File target = new File(appConfiguration.getUploadPath() + "/" + fileName);
+        try {
+            OutputStream outputStream = new FileOutputStream(target);
+            outputStream.write(multipartFile.getBytes());
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileName;
     }
 }
