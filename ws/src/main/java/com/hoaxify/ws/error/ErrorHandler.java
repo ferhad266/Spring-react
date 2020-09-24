@@ -34,7 +34,7 @@ public class ErrorHandler implements ErrorController {
             }
             error.setValidationErrors(validationErrors);
         }
-        return new ApiError(status, message, path);
+        return error;
     }
 
     @Override
