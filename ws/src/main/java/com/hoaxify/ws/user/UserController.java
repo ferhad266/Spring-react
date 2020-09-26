@@ -1,6 +1,5 @@
 package com.hoaxify.ws.user;
 
-import com.hoaxify.ws.error.ApiError;
 import com.hoaxify.ws.shared.CurrentUser;
 import com.hoaxify.ws.shared.GenericResponse;
 import com.hoaxify.ws.user.vm.UserUpdateVM;

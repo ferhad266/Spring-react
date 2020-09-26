@@ -24,7 +24,7 @@ public class HoaxService {
 
     FileAttachmentRepository fileAttachmentRepository;
 
-    public HoaxService(HoaxRepository hoaxRepository, UserService userService,FileAttachmentRepository fileAttachmentRepository) {
+    public HoaxService(HoaxRepository hoaxRepository, UserService userService, FileAttachmentRepository fileAttachmentRepository) {
         super();
         this.hoaxRepository = hoaxRepository;
         this.userService = userService;
@@ -37,8 +37,8 @@ public class HoaxService {
         hoax.setTimestamp(new Date());
         hoax.setUser(user);
         hoaxRepository.save(hoax);
-        Optional<FileAttachment> optionalFileAttachment  = fileAttachmentRepository.findById(hoaxSubmitVM.getAttachmentId());
-        if (optionalFileAttachment.isPresent()){
+        Optional<FileAttachment> optionalFileAttachment = fileAttachmentRepository.findById(hoaxSubmitVM.getAttachmentId());
+        if (optionalFileAttachment.isPresent()) {
             FileAttachment fileAttachment = optionalFileAttachment.get();
             fileAttachment.setHoax(hoax);
             fileAttachmentRepository.save(fileAttachment);
@@ -98,5 +98,9 @@ public class HoaxService {
         return (root, query, criteriaBuilder) -> {
             return criteriaBuilder.greaterThan(root.get("id"), id);
         };
+    }
+
+    public void delete(long id) {
+        hoaxRepository.deleteById(id);
     }
 }
