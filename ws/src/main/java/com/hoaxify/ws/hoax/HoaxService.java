@@ -30,9 +30,9 @@ public class HoaxService {
     public HoaxService(HoaxRepository hoaxRepository, UserService userService, FileAttachmentRepository fileAttachmentRepository, FileService fileService) {
         super();
         this.hoaxRepository = hoaxRepository;
-        this.userService = userService;
         this.fileAttachmentRepository = fileAttachmentRepository;
         this.fileService = fileService;
+        this.userService = userService;
     }
 
     public void save(HoaxSubmitVM hoaxSubmitVM, User user) {
@@ -112,4 +112,5 @@ public class HoaxService {
         }
         hoaxRepository.deleteById(id);
     }
+
 }

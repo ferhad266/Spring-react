@@ -2,6 +2,7 @@ package com.hoaxify.ws.user;
 
 import com.hoaxify.ws.error.NotFoundException;
 import com.hoaxify.ws.file.FileService;
+import com.hoaxify.ws.hoax.HoaxService;
 import com.hoaxify.ws.user.vm.UserUpdateVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +20,7 @@ public class UserService {
 
     FileService fileService;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, FileService fileService) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, FileService fileService,HoaxService hoaxService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.fileService = fileService;
@@ -61,5 +62,9 @@ public class UserService {
         return userRepository.save(inDB);
     }
 
-
+    public void deleteUser(String username) {
+        User inDB = userRepository.findByUsername(username);
+        fileService.deleteAllStoredFilesForUser(inDB);
+        userRepository.delete(inDB);
+    }
 }
